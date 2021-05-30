@@ -1,18 +1,21 @@
-import { Expense, Recurrence } from './index';
-import getCurrentMonth from './get-current-month';
+import { Expense, Recurrence } from './interfaces';
 import getMonthlyCost from './get-monthly-cost';
 
-export default function getAggregateCost(expense: Expense): number {
+function formatCost(cost: number): number {
+    return Number(cost.toFixed(2));
+}
+
+export default function getAggregateCost({ expense, currentMonth }: { expense: Expense, currentMonth: number }): number {
     const { recurrence } = expense;
     const monthlyCost = getMonthlyCost(expense);
-    const currentMonth = getCurrentMonth();
 
-    if (recurrence.months >= currentMonth || (currentMonth % recurrence.months) === 0) {
-        return monthlyCost * currentMonth;
+    if (recurrence.months >= currentMonth) {
+        return formatCost(monthlyCost * currentMonth)
     }
 
     const pastRecurrencesCount = Number.parseInt((currentMonth / recurrence.months) as unknown as string);
     const monthCount = currentMonth - (pastRecurrencesCount * recurrence.months);
+    const aggregateCost = monthlyCost * monthCount;
 
-    return monthlyCost * monthCount;
+    return formatCost(aggregateCost);
 }

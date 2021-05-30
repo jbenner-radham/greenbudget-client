@@ -28,10 +28,8 @@ function readCsv(filename: string): Expense[] {
     }));
 }
 
-const data = readCsv('expenses.csv');
+export default function getExpenses(): Expense[] {
+    const filepath = path.join('../', 'expenses.csv');
 
-console.log(data);
-
-const montlySum: number = data.reduce((accumulator, { cost, recurrence }) => (cost / recurrence.months ) + accumulator, 0);
-
-console.log({ montlySum: `$${montlySum.toFixed(2)}` });
+    return readCsv(filepath);
+}

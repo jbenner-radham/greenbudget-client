@@ -4,11 +4,14 @@
   "description": "A budgeting helper app.",
   "main": "lib/index.ts",
   "scripts": {
+    "prebuild": "npm run clean",
     "build": "tsc",
+    "clean": "rm -rf dist/",
     "prestart": "npm run build",
-    "start": "node dist/index.js",
-    "test": "mocha --require ts-node/register --extensions ts test/spec/**/*.ts",
-    "test:watch": "mocha --require ts-node/register --extensions ts --watch --watch-files test/spec/**/*.ts test/spec/**/*.ts"
+    "_start": "node dist/index.js",
+    "start": "node dist/server.js",
+    "test": "mocha --require ts-node/register --extensions ts test/spec/**/*.spec.ts",
+    "test:watch": "mocha --require ts-node/register --extensions ts --watch --watch-files test/spec/**/*.spec.ts test/spec/**/*.spec.ts"
   },
   "author": "James Benner (http://www.jamesbenner.com/)",
   "license": "MIT",
